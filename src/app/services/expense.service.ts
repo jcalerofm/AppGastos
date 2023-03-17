@@ -4,6 +4,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Expense } from '../models/expense.model';
+import { DataService } from './data.service';
 
 
 @Injectable({
@@ -12,52 +13,24 @@ import { Expense } from '../models/expense.model';
 export class ExpenseService {
 
   constructor(
-    private afAuth: AngularFireAuth,
-    private db: AngularFireDatabase
+    private saveExpense: DataService
   ) { }
 
-  // Agregar gasto
-  addExpense(expense: any) {
-    return this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.db.list(`users/${user.uid}/gastos`).push(expense);
-        } else {
-          throw new Error('No user is currently logged in.');
-        }
-      })
-    );
-  }
-
-  // Obtener gastos
   getExpenses() {
-    return this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.db
-            .list(`users/${user.uid}/gastos`)
-            .valueChanges();
-        } else {
-          return of([]);
-        }
-      })
-    );
+    return this.saveExpense.cargaExpenses();
   }
 
-  // Eliminar gasto
-  deleteExpense(expenseId: string) {
-    return this.afAuth.authState.pipe(
-      switchMap(user => {
-        if (user) {
-          return this.db.object(`users/${user.uid}/gastos/${expenseId}`).remove();
-        } else {
-          throw new Error('No user is currently logged in.');
-        }
-      })
-    );
+  addExpense(misGastos: Expense[]) {
+    this.expenses = misGastos;
+  }
+
+  addExpenseService(newExpense: Expense) {
+    this.expenses.push(newExpense);
+    this.saveExpense.guardaExpenses(this.expenses);
   }
 
   expenses: Expense[] = [
-    new Expense(new Date('2023-03-17'), 'Cena', 'ocio', 50)
+    new Expense(new Date('2023-03-01'), 'Cena con amigos', 'Comida', 50),
   ];
+
 }

@@ -16,26 +16,29 @@ export class MainComponent implements OnInit {
   constructor(private expService: ExpenseService) { }
 
   ngOnInit(): void {
-    this.expService.getExpenses().subscribe((myExpenses: any[]) => {
-      console.log(myExpenses);
-      this.expenses = myExpenses.map(exp => new Expense(exp.date, exp.concept, exp.category, exp.amount));
-      this.expService.addExpense(this.expenses);
-    });
+    this.expService.getExpenses().subscribe(
+      myExpenses => {
+        console.log(myExpenses)
+        this.expenses = Object.values(myExpenses);
+        this.expService.addExpense(this.expenses);
+      }
+
+    );
   }
 
-  cuadroFecha: Date = new Date();
+  cuadroFecha: string = new Date().toISOString().split('T')[0];
   cuadroConcepto: string = "";
   cuadroCategoria: string = "";
   cuadroImporte: number = 0;
 
   addExpense() {
-    let newExpense = new Expense(this.cuadroFecha, this.cuadroConcepto, this.cuadroCategoria, this.cuadroImporte);
-    this.expService.addExpense(newExpense);
-    this.cuadroFecha = new Date();
+    let newExpense = new Expense(new Date(this.cuadroFecha), this.cuadroConcepto, this.cuadroCategoria, this.cuadroImporte);
+    this.expService.addExpenseService(newExpense);
+    this.cuadroFecha = "";
     this.cuadroConcepto = "";
     this.cuadroCategoria = "";
     this.cuadroImporte = 0;
-    
+
   }
 
 }
