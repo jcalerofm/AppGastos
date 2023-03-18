@@ -5,12 +5,18 @@ import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Expense } from '../models/expense.model';
 import { DataService } from './data.service';
+import { environment } from 'src/environments/environment';
+const firebase = environment.firebase;
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExpenseService {
+  updateExpenses(expenses: Expense[]) {
+    throw new Error('Method not implemented.');
+  }
+
 
   constructor(
     private saveExpense: DataService

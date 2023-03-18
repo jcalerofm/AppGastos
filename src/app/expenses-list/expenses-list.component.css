@@ -120,3 +120,12 @@ tbody tr:nth-child(even) {
   font-weight: bold;
   color: #07588a;
 }
+
+.fas.fa-trash {
+  color: #de4343;
+  cursor: pointer;
+}
+
+.fas.fa-trash:hover {
+  color: #b63434;
+}

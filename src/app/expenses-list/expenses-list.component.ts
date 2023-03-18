@@ -59,6 +59,14 @@ export class ExpensesListComponent implements OnInit {
   }
 
 
+  deleteExpense(expense: Expense): void {
+    // Elimina el gasto del arreglo
+    this.expenses = this.expenses.filter(item => item.id !== expense.id);
+    // Actualiza la lista de gastos en tu servicio
+    this.expService.updateExpenses(this.expenses);
+  }
+
+
   onHeaderClick(column: string): void {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
@@ -135,6 +143,7 @@ export class ExpensesListComponent implements OnInit {
     this.expenses = this.expService.filterExpensesByCategoryAndMonth(this.filterCategoryAndMonthCategory!, this.filterCategoryAndMonthMonth! -1, this.filterCategoryAndMonthYear!);
     this.updateTotalExpensesAmount();
   }
+
 
 
 }
