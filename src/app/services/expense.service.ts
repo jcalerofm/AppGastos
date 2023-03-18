@@ -33,6 +33,31 @@ export class ExpenseService {
     this.saveExpense.guardaExpenses(this.expenses);
   }
 
+  //Filtrar gastos por un mes especifico
+  filterExpensesByMonth(month: number, year: number): Expense[] {
+    return this.expenses.filter(expense => {
+      const expenseDate = new Date(expense.date);
+      return expenseDate.getMonth() === month && expenseDate.getFullYear() === year;
+    });
+  }
+
+  //Sumatorio de todos los gastos
+  getTotalExpenses(): number {
+    return this.expenses.reduce((sum, expense) => sum + expense.amount, 0);
+  }
+
+  //Filtrar gastos por categoria
+  filterExpensesByCategory(category: string): Expense[] {
+    return this.expenses.filter(expense => expense.category === category);
+  }
+
+  //Filtrar gastos por categoria en un mes especifico
+  filterExpensesByCategoryAndMonth(category: string, month: number, year: number): Expense[] {
+    const expensesByMonth = this.filterExpensesByMonth(month, year);
+    return expensesByMonth.filter(expense => expense.category === category);
+  }
+
+
 
 
 }
