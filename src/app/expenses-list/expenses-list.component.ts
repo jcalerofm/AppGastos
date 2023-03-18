@@ -13,6 +13,9 @@ import { ExpenseService } from '../services/expense.service';
 export class ExpensesListComponent implements OnInit {
 
   expenses: Expense[] = [];
+  sortColumn = '';
+  sortDirection = 'asc';
+
   constructor(private expService: ExpenseService) { }
 
   ngOnInit(): void {
@@ -23,8 +26,55 @@ export class ExpensesListComponent implements OnInit {
         this.expService.addExpense(this.expenses);
       }
     );
+  }
 
-}
+  onHeaderClick(column: string): void {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+    this.sortExpenses();
+  }
+
+  sortExpenses(): void {
+    const compare = (a: Expense, b: Expense): number => {
+      let aValue: any;
+      let bValue: any;
+
+      switch (this.sortColumn) {
+        case 'date':
+          aValue = a.date;
+          bValue = b.date;
+          break;
+        case 'concept':
+          aValue = a.concept;
+          bValue = b.concept;
+          break;
+        case 'category':
+          aValue = a.category;
+          bValue = b.category;
+          break;
+        case 'amount':
+          aValue = a.amount;
+          bValue = b.amount;
+          break;
+        default:
+          return 0;
+      }
+
+      if (aValue < bValue) {
+        return this.sortDirection === 'asc' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return this.sortDirection === 'asc' ? 1 : -1;
+      }
+      return 0;
+    };
+
+    this.expenses.sort(compare);
+  }
 
 }
 
