@@ -24,13 +24,15 @@ export class ExpenseService {
     this.expenses = misGastos;
   }
 
+  expenses: Expense[] = [
+    new Expense(new Date('2023-03-01'), 'Cena con amigos', 'Comida', 50),
+  ];
+
   addExpenseService(newExpense: Expense) {
     this.expenses.push(newExpense);
     this.saveExpense.guardaExpenses(this.expenses);
   }
 
-  expenses: Expense[] = [
-    new Expense(new Date('2023-03-01'), 'Cena con amigos', 'Comida', 50),
-  ];
+
 
 }

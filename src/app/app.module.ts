@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 import { AppComponent } from './app.component';
@@ -20,6 +20,8 @@ import { PerfilComponent } from './perfil/perfil.component';
 import { ExpenseService } from './services/expense.service';
 import { DataService } from './services/data.service';
 import { UserService } from './services/user.service';
+import { ExpensesListComponent } from './expenses-list/expenses-list.component';
+import { FormatDatePipe } from './format-date.pipe';
 
 
 
@@ -42,7 +44,9 @@ const appRoutes: Routes = [
     NavbarComponent,
     FooterComponent,
     HomeComponent,
-    PerfilComponent
+    PerfilComponent,
+    ExpensesListComponent,
+    FormatDatePipe
   ],
   imports: [
     BrowserModule,
@@ -54,7 +58,7 @@ const appRoutes: Routes = [
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase())
   ],
-  providers: [ExpenseService, DataService],
+  providers: [ExpenseService, DataService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

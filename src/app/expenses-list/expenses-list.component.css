@@ -1,0 +1,43 @@
+/* expenses-list.component.css */
+#listado {
+  overflow: hidden;
+  box-shadow: 0 0 15px rgb(0 0 0 / 20%);
+  display: grid;
+  width: 60%;
+  margin: 0 auto;
+  border-radius: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #E1F6F4;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th{
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+  color: #E1F6F4;
+}
+td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+  color: #07588a;
+}
+
+thead {
+  background-color: #07588a;
+  color: #E1F6F4;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #E1F6F4;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #BFE9DB;
+}
